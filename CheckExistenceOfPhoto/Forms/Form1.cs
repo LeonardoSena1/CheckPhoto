@@ -11,6 +11,10 @@ namespace CheckExistenceOfPhoto
         public Form1()
         {
             InitializeComponent();
+
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
 
         private void AtualizaListBoxImage()
@@ -35,6 +39,8 @@ namespace CheckExistenceOfPhoto
             if (String.IsNullOrWhiteSpace(Input))
                 return;
 
+            IsEnabledButtons(false);
+
             if (Ping.Image(Input))
                 SqLiteHelper.InsertImage(
                     new Model.ImagensModel()
@@ -43,7 +49,6 @@ namespace CheckExistenceOfPhoto
                         Status = true
                     });
             else
-
                 SqLiteHelper.InsertImage(
                     new Model.ImagensModel()
                     {
@@ -54,6 +59,7 @@ namespace CheckExistenceOfPhoto
 
             AtualizaListBoxImage();
             TextBoxLink.Clear();
+            IsEnabledButtons(true);
         }
 
         private void KeyDownTextBoxLink(object sender, KeyEventArgs e)
@@ -103,7 +109,90 @@ namespace CheckExistenceOfPhoto
         {
             SqLiteHelper.DeleteImagens();
             ListBoxImage.Items.Clear();
-            MessageBox.Show("Todos os registros forão apagados", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Todos os registros foram apagados", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void IsEnabledButtons(bool Input)
+        {
+            TextBoxLink.Enabled = Input;
+            ButtonBuscar.Enabled = Input;
+            ButtonDownload.Enabled = Input;
+            ButtonExcluirDados.Enabled = Input;
+            ButtonUpload.Enabled = Input;
+        }
+
+        private void ButtonUpload_Click(object sender, EventArgs e)
+        {
+            string[] allowedExtensions = { ".xlsx", ".xlsm", ".xltx", ".xltm" };
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Arquivos Excel (*.xlsx)|*.xlsx|Todos os Arquivos (*.*)|*.*";
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string FilePath = openFileDialog.FileName;
+
+                    if (Array.Exists(allowedExtensions, ext => ext == Path.GetExtension(FilePath).ToLower()))
+                    {
+                        if (ExcelHelpers.VerificaPlanilhaParaImport(FilePath))
+                        {
+                            IsEnabledButtons(false);
+                            HashSet<string> UrlsImport = ExcelHelpers.GetUrlsPlanilhaImport(FilePath);
+
+                            foreach (var urlI in UrlsImport)
+                            {
+                                if (Ping.Image(urlI))
+                                    SqLiteHelper.InsertImage(
+                                        new Model.ImagensModel()
+                                        {
+                                            Url = urlI,
+                                            Status = true
+                                        });
+                                else
+                                    SqLiteHelper.InsertImage(
+                                        new Model.ImagensModel()
+                                        {
+                                            Url = urlI,
+                                            Status = false
+                                        });
+                            }
+
+                            AtualizaListBoxImage();
+                            IsEnabledButtons(true);
+                        }
+                        else
+                            MessageBox.Show($"Planilha não confere, faça o download da planilha correta", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                        MessageBox.Show($"Extensão inválida. As extensões permitidas são: {string.Join(", ", allowedExtensions)}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string filePath = Environment.CurrentDirectory + "\\Sources\\Excels\\Planilha-Imagens-Upload.xlsx";
+            string fileName = "Planilha-Modelo-" + Guid.NewGuid().ToString("N") + ".xlsx";
+
+            if (File.Exists(filePath))
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.FileName = fileName;
+                saveFileDialog.Filter = "Planilhas Excel (*.xlsx)|*.xlsx|Todos os arquivos (*.*)|*.*";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    File.Copy(filePath, saveFileDialog.FileName, true);
+
+                    MessageBox.Show("Arquivo salvo com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("A planilha não foi encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
