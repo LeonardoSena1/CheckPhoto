@@ -32,6 +32,9 @@
             this.TextBoxLink = new System.Windows.Forms.TextBox();
             this.ListBoxImage = new System.Windows.Forms.ListBox();
             this.ButtonBuscar = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.ButtonDownload = new System.Windows.Forms.Button();
+            this.ButtonExcluirDados = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LabelLink
@@ -70,11 +73,33 @@
             this.ButtonBuscar.UseVisualStyleBackColor = true;
             this.ButtonBuscar.Click += new System.EventHandler(this.ButtonBuscar_Click);
             // 
+            // ButtonDownload
+            // 
+            this.ButtonDownload.Location = new System.Drawing.Point(29, 422);
+            this.ButtonDownload.Name = "ButtonDownload";
+            this.ButtonDownload.Size = new System.Drawing.Size(75, 23);
+            this.ButtonDownload.TabIndex = 4;
+            this.ButtonDownload.Text = "Download";
+            this.ButtonDownload.UseVisualStyleBackColor = true;
+            this.ButtonDownload.Click += new System.EventHandler(this.ButtonDownloadAllImagens_Click);
+            // 
+            // ButtonExcluirDados
+            // 
+            this.ButtonExcluirDados.Location = new System.Drawing.Point(110, 422);
+            this.ButtonExcluirDados.Name = "ButtonExcluirDados";
+            this.ButtonExcluirDados.Size = new System.Drawing.Size(75, 23);
+            this.ButtonExcluirDados.TabIndex = 5;
+            this.ButtonExcluirDados.Text = "Excluir dados";
+            this.ButtonExcluirDados.UseVisualStyleBackColor = true;
+            this.ButtonExcluirDados.Click += new System.EventHandler(this.ButtonExcluirDados_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 450);
+            this.Controls.Add(this.ButtonExcluirDados);
+            this.Controls.Add(this.ButtonDownload);
             this.Controls.Add(this.ButtonBuscar);
             this.Controls.Add(this.ListBoxImage);
             this.Controls.Add(this.TextBoxLink);
@@ -93,5 +118,8 @@
         private TextBox TextBoxLink;
         private ListBox ListBoxImage;
         private Button ButtonBuscar;
+        private SaveFileDialog saveFileDialog1;
+        private Button ButtonDownload;
+        private Button ButtonExcluirDados;
     }
 }

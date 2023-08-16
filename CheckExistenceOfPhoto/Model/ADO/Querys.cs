@@ -7,5 +7,6 @@
         public const string CreateTable = "CREATE TABLE IF NOT EXISTS Imagens (Id INTEGER PRIMARY KEY, Url TEXT, Status BIT)";
         public const string GetAllImagens = "SELECT Id, Url, Status FROM Imagens ORDER BY Id DESC";
         public const string InsertImagens = "INSERT INTO Imagens(Url,Status)VALUES(@Url,@Status)";
+        public const string DeleteImagens = "DELETE FROM Imagens";  
     }
 }

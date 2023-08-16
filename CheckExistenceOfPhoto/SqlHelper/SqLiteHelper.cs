@@ -66,5 +66,16 @@ namespace CheckExistenceOfPhoto.SqlHelper
                 }
             }
         }
+
+        public static void DeleteImagens()
+        {
+            using (var sqlCnn = new SQLiteConnection(ConnectionString))
+            {
+                sqlCnn.Open();
+
+                using (var sqlCmd = new SQLiteCommand(Querys.DeleteImagens, sqlCnn))
+                    _ = sqlCmd.ExecuteNonQuery();
+            }
+        }
     }
 }

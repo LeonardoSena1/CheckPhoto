@@ -9,10 +9,25 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="ClosedXML" Version="0.102.0" />
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.10" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />		
 		<PackageReference Include="System.Data.SQLite" Version="1.0.118" />
 		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
 		<PackageReference Include="System.Data.SQLite.EF6" Version="1.0.118" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Sources\Img\" />
+	  <Folder Include="Sources\Excels\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Sources\Excels\Planilha-Imagens.xlsx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Sources\Img\57286132.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>
