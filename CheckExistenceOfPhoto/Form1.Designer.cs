@@ -26,10 +26,12 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private async void InitializeComponent()
         {
             this.LabelLink = new System.Windows.Forms.Label();
             this.TextBoxLink = new System.Windows.Forms.TextBox();
+            this.ListBoxImage = new System.Windows.Forms.ListBox();
+            this.ButtonBuscar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LabelLink
@@ -47,17 +49,38 @@
             this.TextBoxLink.Name = "TextBoxLink";
             this.TextBoxLink.Size = new System.Drawing.Size(442, 23);
             this.TextBoxLink.TabIndex = 1;
-            this.TextBoxLink.KeyDown += KeyDownTextBoxLink;
+            // 
+            // ListBoxImage
+            // 
+            this.ListBoxImage.FormattingEnabled = true;
+            this.ListBoxImage.ItemHeight = 15;
+            this.ListBoxImage.Location = new System.Drawing.Point(29, 127);
+            this.ListBoxImage.Name = "ListBoxImage";
+            this.ListBoxImage.Size = new System.Drawing.Size(565, 289);
+            this.ListBoxImage.TabIndex = 2;
+            // 
+            // ButtonBuscar
+            // 
+            this.ButtonBuscar.Location = new System.Drawing.Point(519, 35);
+            this.ButtonBuscar.Name = "ButtonBuscar";
+            this.ButtonBuscar.Size = new System.Drawing.Size(75, 23);
+            this.ButtonBuscar.TabIndex = 3;
+            this.ButtonBuscar.Text = "Buscar";
+            this.ButtonBuscar.UseVisualStyleBackColor = true;
+            this.ButtonBuscar.Click += new System.EventHandler(this.ButtonBuscar_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 450);
+            this.Controls.Add(this.ButtonBuscar);
+            this.Controls.Add(this.ListBoxImage);
             this.Controls.Add(this.TextBoxLink);
             this.Controls.Add(this.LabelLink);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -67,5 +90,7 @@
 
         private Label LabelLink;
         private TextBox TextBoxLink;
+        private ListBox ListBoxImage;
+        private Button ButtonBuscar;
     }
 }
