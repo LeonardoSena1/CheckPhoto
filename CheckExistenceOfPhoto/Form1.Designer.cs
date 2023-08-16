@@ -47,6 +47,7 @@
             // 
             this.TextBoxLink.Location = new System.Drawing.Point(64, 32);
             this.TextBoxLink.Name = "TextBoxLink";
+            this.TextBoxLink.PlaceholderText = "https://url-imagem/550/tech.jpg";
             this.TextBoxLink.Size = new System.Drawing.Size(442, 23);
             this.TextBoxLink.TabIndex = 1;
             // 
@@ -61,7 +62,7 @@
             // 
             // ButtonBuscar
             // 
-            this.ButtonBuscar.Location = new System.Drawing.Point(519, 35);
+            this.ButtonBuscar.Location = new System.Drawing.Point(519, 33);
             this.ButtonBuscar.Name = "ButtonBuscar";
             this.ButtonBuscar.Size = new System.Drawing.Size(75, 23);
             this.ButtonBuscar.TabIndex = 3;

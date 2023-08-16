@@ -1,11 +1,13 @@
 using CheckExistenceOfPhoto.Components;
+using CheckExistenceOfPhoto.Model;
+using CheckExistenceOfPhoto.SqlHelper;
 
 namespace CheckExistenceOfPhoto
 {
     public partial class Form1 : Form
     {
-        private const string MsgFound = "Status: Encontrado, Url:{0}";
-        private const string MsgNotFound = "Status: Não encontrado, Url:{0}";
+        private const string MsgFound = "Status: {0}, Url:{1}";
+        private const string MsgNotFound = "Status: {0}, Url:{1}";
 
         public Form1()
         {
@@ -15,6 +17,11 @@ namespace CheckExistenceOfPhoto
         private void MainForm_Load(object sender, EventArgs e)
         {
             TextBoxLink.KeyDown += KeyDownTextBoxLink;
+
+            List<ImagensModel> Models = SqLiteHelper.GetAllImagens();
+
+            foreach (var model in Models)            
+                ListBoxImage.Items.Add(String.Format(MsgFound, (model.Status ? "Encontrado" : "Não encontrado"), model.Url));            
         }
 
         private void Check(string Input)
@@ -23,9 +30,25 @@ namespace CheckExistenceOfPhoto
                 return;
 
             if (Ping.Image(Input))
-                ListBoxImage.Items.Add(String.Format(MsgFound, Input));
+            {
+                SqLiteHelper.InsertImage(
+                    new Model.ImagensModel()
+                    {
+                        Url = Input,
+                        Status = true
+                    });
+                ListBoxImage.Items.Add(String.Format(MsgFound, "Encontrado", Input));
+            }
             else
-                ListBoxImage.Items.Add(String.Format(MsgNotFound, Input));
+            {
+                SqLiteHelper.InsertImage(
+                    new Model.ImagensModel()
+                    {
+                        Url = Input,
+                        Status = false
+                    });
+                ListBoxImage.Items.Add(String.Format(MsgNotFound, "Não encontrado", Input));
+            }
 
             Application.DoEvents();
         }
